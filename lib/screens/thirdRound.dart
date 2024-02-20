@@ -34,13 +34,23 @@ class _ThirdRoundState extends State<ThirdRound> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Text(
-                    'Third Round',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      color: Colors.white,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Blind Round',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: Image.asset('assets/images/blind.png'),
+                      ),
+                    ],
                   ),
                   ListView.builder(
                     shrinkWrap: true,

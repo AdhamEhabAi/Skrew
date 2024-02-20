@@ -34,13 +34,24 @@ class _FourthRoundState extends State<FourthRound> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Text(
-                    'Final Round',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      color: Colors.white,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Final Doubled Round',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(width: 10,),
+                      SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: Image.asset('assets/images/pngegg.png'),
+                      ),
+                    ],
                   ),
                   ListView.builder(
                     shrinkWrap: true,

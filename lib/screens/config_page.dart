@@ -13,9 +13,15 @@ class ConfigPage extends StatefulWidget {
 
 class _ConfigPageState extends State<ConfigPage> {
   Map<String,int> players = {};
-
+  Map<String ,int> oldPlayers = {};
   @override
   Widget build(BuildContext context) {
+    oldPlayers = (ModalRoute.of(context)!.settings.arguments as Map<String,int>?) ?? {};
+    for(var key in oldPlayers.keys)
+    {
+      oldPlayers[key] = 0;
+    }
+    players.addAll(oldPlayers);
     return Scaffold(
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
@@ -90,6 +96,18 @@ class _ConfigPageState extends State<ConfigPage> {
                       Navigator.pushReplacementNamed(context, 'FirstRound', arguments: players);
                     },
                   ) : Container(),
+                  const SizedBox(height: 20,),
+                  players.isNotEmpty ? CustomButton(
+                    text: 'Clear All',
+                    color: kPrimaryColor,
+                    onTap: ()
+                    {
+                      setState(() {
+                        players.clear();
+                        oldPlayers.clear();
+                      });
+                    },
+                  ) : Container(),
                 ],
               ),
             ),
@@ -106,8 +124,8 @@ class _ConfigPageState extends State<ConfigPage> {
         return PlayerDialog(
           onPlayerAdded: (name) {
             setState(() {
-
               players[name] = 0;
+
             });
             Navigator.of(context).pop();
           },

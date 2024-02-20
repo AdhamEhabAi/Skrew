@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 class PlayerResult extends StatelessWidget {
   final String playerName;
   final int playerScore;
-  final bool isHighestScore;
+  final bool isLowestScore;
 
   const PlayerResult({
     Key? key,
     required this.playerName,
     required this.playerScore,
-    required this.isHighestScore,
+    required this.isLowestScore,
   }) : super(key: key);
 
   @override
@@ -21,7 +21,7 @@ class PlayerResult extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         height: 70,
         decoration: BoxDecoration(
-          color: isHighestScore ? Colors.green : Colors.purple,
+          color: isLowestScore ? Colors.green : Colors.purple, // Change the color condition
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(

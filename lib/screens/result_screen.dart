@@ -11,17 +11,26 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-  Map<String, int> playerScores = {};
+  late Map<String, int> playerScores;
+  late List<String> playersWithLowestScore;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    playerScores = ModalRoute.of(context)!.settings.arguments as Map<String, int>;
+    playersWithLowestScore = _findPlayersWithLowestScore(playerScores);
+  }
+
+  List<String> _findPlayersWithLowestScore(Map<String, int> scores) {
+    // Find the lowest score
+    int lowestScore = scores.values.reduce((value, element) => value < element ? value : element);
+
+    // Find players with the lowest score
+    return scores.entries.where((entry) => entry.value == lowestScore).map((entry) => entry.key).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    playerScores = ModalRoute.of(context)!.settings.arguments as Map<String, int>;
-
-
-    // Find the player with the highest score
-    int highestScore = playerScores.values.reduce((value, element) => value > element ? value : element);
-    String playerWithHighestScore = playerScores.keys.firstWhere((key) => playerScores[key] == highestScore);
-
     return Scaffold(
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
@@ -50,18 +59,22 @@ class _ResultScreenState extends State<ResultScreen> {
                   ListView.builder(
                     shrinkWrap: true,
                     itemCount: playerScores.length,
-                    itemBuilder: (context, index) => PlayerResult(
-                      playerName: playerScores.keys.elementAt(index),
-                      playerScore: playerScores.values.elementAt(index),
-                      isHighestScore: playerScores.keys.elementAt(index) == playerWithHighestScore,
-                    ),
+                    itemBuilder: (context, index) {
+                      String playerName = playerScores.keys.elementAt(index);
+                      int playerScore = playerScores.values.elementAt(index);
+                      bool isLowestScore = playersWithLowestScore.contains(playerName);
+                      return PlayerResult(
+                        playerName: playerName,
+                        playerScore: playerScore,
+                        isLowestScore: isLowestScore,
+                      );
+                    },
                   ),
-
                   CustomButton(
                     text: 'New Game',
                     color: kSecondryColor,
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, 'ConfigPage');
+                      Navigator.pushReplacementNamed(context, 'ConfigPage',arguments: playerScores);
                     },
                   ),
                 ],
