@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:screw/constants/colors.dart';
+import 'package:screw/screens/Second_round.dart';
 import 'package:screw/widgets/custom_button.dart';
 import 'package:screw/widgets/player_card.dart';
 
@@ -60,7 +62,7 @@ class _FirstRoundState extends State<FirstRound> {
                     text: 'Round 2',
                     color: kSecondryColor,
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, 'SecondRound', arguments: playerScores);
+                      Get.to(() => const SecondRound(), arguments: playerScores,transition: Transition.rightToLeft);
                     },
                   ),
                 ],

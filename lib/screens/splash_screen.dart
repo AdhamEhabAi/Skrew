@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:screw/constants/colors.dart';
+import 'package:screw/screens/explain_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,7 +15,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, 'ExplainPage');
+      Get.to(() => const ExplainPage(),transition: Transition.fadeIn);
+
     });
     super.initState();
   }

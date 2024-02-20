@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:screw/constants/colors.dart';
+import 'package:screw/screens/thirdRound.dart';
 import 'package:screw/widgets/custom_button.dart';
 import 'package:screw/widgets/player_card.dart';
 
@@ -70,7 +72,7 @@ class _SecondRoundState extends State<SecondRound> {
                     text: 'Round 3',
                     color: kSecondryColor,
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, 'ThirdRound', arguments: playerScores);
+                      Get.to(() => const ThirdRound(), arguments: playerScores,transition: Transition.rightToLeft);
                     },
                   ),
                 ],

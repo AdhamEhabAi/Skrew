@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:screw/constants/colors.dart';
+import 'package:screw/screens/config_page.dart';
 import 'package:screw/widgets/custom_button.dart';
 
 class ExplainPage extends StatelessWidget {
@@ -72,7 +74,8 @@ class ExplainPage extends StatelessWidget {
                 width: 200,
                 onTap: ()
                 {
-                  Navigator.pushReplacementNamed(context, 'ConfigPage');
+                  Get.to(() => const ConfigPage(),transition: Transition.fadeIn);
+
                 },
               ),
               const SizedBox(height: 25,),

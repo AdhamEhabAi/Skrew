@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:screw/constants/colors.dart';
+import 'package:screw/screens/result_screen.dart';
 import 'package:screw/widgets/custom_button.dart';
 import 'package:screw/widgets/player_card.dart';
 
@@ -71,7 +73,8 @@ class _FourthRoundState extends State<FourthRound> {
                     text: 'Finish',
                     color: kSecondryColor,
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, 'ResultScreen', arguments: playerScores);
+                      Get.to(() => const ResultScreen(), arguments: playerScores,transition: Transition.fadeIn);
+
                     },
                   ),
                 ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:screw/constants/colors.dart';
+import 'package:screw/screens/First_Round.dart';
 import 'package:screw/widgets/custom_button.dart';
 import 'package:screw/widgets/player_dialog.dart';
 import 'package:screw/widgets/player_widget.dart';
@@ -93,7 +95,7 @@ class _ConfigPageState extends State<ConfigPage> {
                   players.length>=3 ? CustomButton(text: 'Let\'s Start',color: kSecondryColor,
                     onTap: ()
                     {
-                      Navigator.pushReplacementNamed(context, 'FirstRound', arguments: players);
+                      Get.to(() => const FirstRound(), arguments: players,transition: Transition.rightToLeft);
                     },
                   ) : Container(),
                   const SizedBox(height: 20,),

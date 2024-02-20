@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:screw/constants/colors.dart';
+import 'package:screw/screens/config_page.dart';
 import 'package:screw/widgets/custom_button.dart';
 import 'package:screw/widgets/player_result.dart';
 
@@ -74,7 +76,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     text: 'New Game',
                     color: kSecondryColor,
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, 'ConfigPage',arguments: playerScores);
+                      Get.to(() => const ConfigPage(), arguments: playerScores,transition: Transition.zoom);
                     },
                   ),
                 ],
