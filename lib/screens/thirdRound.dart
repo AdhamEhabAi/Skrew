@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screw/constants/colors.dart';
+import 'package:screw/constants/functions.dart';
 import 'package:screw/screens/fourth_round.dart';
 import 'package:screw/widgets/custom_button.dart';
 import 'package:screw/widgets/player_card.dart';
 
 class ThirdRound extends StatefulWidget {
-  const ThirdRound({Key? key}) : super(key: key);
+  final Map<String,int> totalResult;
+
+  const ThirdRound({Key? key, required this.totalResult}) : super(key: key);
 
   @override
   State<ThirdRound> createState() => _ThirdRoundState();
@@ -14,6 +17,12 @@ class ThirdRound extends StatefulWidget {
 
 class _ThirdRoundState extends State<ThirdRound> {
   Map<String, int> playerScores = {};
+  late Map<String, int> totalResult;
+  @override
+  void initState() {
+    totalResult = widget.totalResult;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +67,6 @@ class _ThirdRoundState extends State<ThirdRound> {
                     shrinkWrap: true,
                     itemCount: playerScores.length,
                     itemBuilder: (context, index) => PlayerCard(
-                      fourth: false,
                       playerName: playerScores.keys.elementAt(index),
                       playerScore: playerScores.values.elementAt(index),
                       onScoreChanged: (int score) {
@@ -72,7 +80,11 @@ class _ThirdRoundState extends State<ThirdRound> {
                     text: 'Round 4',
                     color: kSecondryColor,
                     onTap: () {
-                      Get.to(() => const FourthRound(), arguments: playerScores,transition: Transition.rightToLeft);
+                      addScoreToResult(playerScores, totalResult);
+                      for (var value in playerScores.keys) {
+                        playerScores[value] = 0;
+                      }
+                      Get.to(() => FourthRound(totalResult: totalResult,), arguments: playerScores,transition: Transition.rightToLeft);
                     },
                   ),
                 ],

@@ -26,6 +26,7 @@ class AddPlayerWidget extends StatelessWidget {
               backgroundImage: AssetImage('assets/images/image_1.jpg'),
             ),
             title: Text(text,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                   color: Colors.white,
                 fontWeight: FontWeight.bold,

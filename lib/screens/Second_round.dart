@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screw/constants/colors.dart';
+import 'package:screw/constants/functions.dart';
 import 'package:screw/screens/thirdRound.dart';
 import 'package:screw/widgets/custom_button.dart';
 import 'package:screw/widgets/player_card.dart';
 
 class SecondRound extends StatefulWidget {
-  const SecondRound({Key? key}) : super(key: key);
+  final Map<String,int> totalResult;
+  const SecondRound({Key? key, required this.totalResult}) : super(key: key);
 
   @override
   State<SecondRound> createState() => _SecondRoundState();
@@ -14,6 +16,13 @@ class SecondRound extends StatefulWidget {
 
 class _SecondRoundState extends State<SecondRound> {
   Map<String, int> playerScores = {};
+  late Map<String, int> totalResult;
+
+  @override
+  void initState() {
+    totalResult = widget.totalResult; // Initialize totalResult in initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +67,6 @@ class _SecondRoundState extends State<SecondRound> {
                     shrinkWrap: true,
                     itemCount: playerScores.length,
                     itemBuilder: (context, index) => PlayerCard(
-                      fourth: false,
                       playerName: playerScores.keys.elementAt(index),
                       playerScore: playerScores.values.elementAt(index),
                       onScoreChanged: (int score) {
@@ -72,7 +80,12 @@ class _SecondRoundState extends State<SecondRound> {
                     text: 'Round 3',
                     color: kSecondryColor,
                     onTap: () {
-                      Get.to(() => const ThirdRound(), arguments: playerScores,transition: Transition.rightToLeft);
+                      addScoreToResult(playerScores, totalResult);
+                      for (var value in playerScores.keys) {
+                        playerScores[value] = 0;
+                      }
+                      Get.to(() => ThirdRound(totalResult: totalResult,), arguments: playerScores,transition: Transition.rightToLeft);
+
                     },
                   ),
                 ],
@@ -84,3 +97,4 @@ class _SecondRoundState extends State<SecondRound> {
     );
   }
 }
+

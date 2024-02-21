@@ -28,9 +28,9 @@ class MyApp extends StatelessWidget {
         'ConfigPage' : (context) => const ConfigPage(),
         'ExplainPage' : (context) => const ExplainPage(),
         'FirstRound' : (context) => const FirstRound(),
-        'SecondRound' : (context) => const SecondRound(),
-        'ThirdRound' : (context) => const ThirdRound(),
-        'FourthRound' : (context) => const FourthRound(),
+        'SecondRound' : (context) => const SecondRound(totalResult: {},),
+        'ThirdRound' : (context) => const ThirdRound(totalResult: {},),
+        'FourthRound' : (context) => const FourthRound(totalResult: {},),
         'ResultScreen' : (context) => const ResultScreen(),
       },
     );

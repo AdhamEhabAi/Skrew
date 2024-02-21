@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screw/constants/colors.dart';
+import 'package:screw/constants/functions.dart';
 import 'package:screw/screens/result_screen.dart';
 import 'package:screw/widgets/custom_button.dart';
 import 'package:screw/widgets/player_card.dart';
 
 class FourthRound extends StatefulWidget {
-  const FourthRound({Key? key}) : super(key: key);
+  final Map<String,int> totalResult;
+  const FourthRound({Key? key, required this.totalResult}) : super(key: key);
 
   @override
   State<FourthRound> createState() => _FourthRoundState();
@@ -14,6 +16,12 @@ class FourthRound extends StatefulWidget {
 
 class _FourthRoundState extends State<FourthRound> {
   Map<String, int> playerScores = {};
+  late Map<String, int> totalResult;
+  @override
+  void initState() {
+    totalResult = widget.totalResult;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +67,6 @@ class _FourthRoundState extends State<FourthRound> {
                     shrinkWrap: true,
                     itemCount: playerScores.length,
                     itemBuilder: (context, index) => PlayerCard(
-                      fourth: true,
                       playerName: playerScores.keys.elementAt(index),
                       playerScore: playerScores.values.elementAt(index),
                       onScoreChanged: (int score) {
@@ -73,7 +80,16 @@ class _FourthRoundState extends State<FourthRound> {
                     text: 'Finish',
                     color: kSecondryColor,
                     onTap: () {
-                      Get.to(() => const ResultScreen(), arguments: playerScores,transition: Transition.fadeIn);
+                      for(var key in playerScores.keys)
+                      {
+                        if(playerScores.containsKey(key))
+                        {
+                          playerScores[key] = (playerScores[key]!)*2;
+                        }
+                      }
+                      addScoreToResult(playerScores , totalResult);
+
+                      Get.to(() => const ResultScreen(), arguments: totalResult,transition: Transition.fadeIn);
 
                     },
                   ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screw/constants/colors.dart';
+import 'package:screw/constants/functions.dart';
 import 'package:screw/screens/Second_round.dart';
 import 'package:screw/widgets/custom_button.dart';
 import 'package:screw/widgets/player_card.dart';
@@ -13,11 +14,18 @@ class FirstRound extends StatefulWidget {
 }
 
 class _FirstRoundState extends State<FirstRound> {
-  Map<String, int> playerScores = {}; // Declared as a class-level variable
+  Map<String, int> playerScores = {};
+  late Map<String,int> totalResult;
+  @override
+  void initState() {
+    totalResult = {};
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    playerScores = ModalRoute.of(context)!.settings.arguments as Map<String, int>;
+    playerScores =
+        ModalRoute.of(context)!.settings.arguments as Map<String, int>;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -48,12 +56,12 @@ class _FirstRoundState extends State<FirstRound> {
                     shrinkWrap: true,
                     itemCount: playerScores.length,
                     itemBuilder: (context, index) => PlayerCard(
-                      fourth: false,
                       playerName: playerScores.keys.elementAt(index),
                       playerScore: playerScores.values.elementAt(index),
                       onScoreChanged: (int score) {
                         setState(() {
-                          playerScores[playerScores.keys.elementAt(index)] = score;
+                          playerScores[playerScores.keys.elementAt(index)] =
+                              score;
                         });
                       },
                     ),
@@ -62,7 +70,15 @@ class _FirstRoundState extends State<FirstRound> {
                     text: 'Round 2',
                     color: kSecondryColor,
                     onTap: () {
-                      Get.to(() => const SecondRound(), arguments: playerScores,transition: Transition.rightToLeft);
+                      addScoreToResult(playerScores, totalResult);
+                      playerScores.keys.forEach((value)
+                      {
+                        playerScores[value] = 0;
+                      });
+                      Get.to(() => SecondRound(totalResult: totalResult,),
+                          arguments: playerScores,
+                          transition: Transition.rightToLeft);
+
                     },
                   ),
                 ],

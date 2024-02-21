@@ -33,6 +33,7 @@ class PlayerResult extends StatelessWidget {
             title: Text(
               playerName,
               style: const TextStyle(
+                overflow: TextOverflow.ellipsis,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,

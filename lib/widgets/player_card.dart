@@ -6,7 +6,6 @@ class PlayerCard extends StatefulWidget {
   const PlayerCard({
     Key? key,
     required this.playerName,
-    required this.fourth,
     required this.playerScore,
     required this.onScoreChanged,
   }) : super(key: key);
@@ -14,7 +13,6 @@ class PlayerCard extends StatefulWidget {
   final String playerName;
   final int playerScore; // Added playerScore variable
   final ValueChanged<int> onScoreChanged;
-  final bool fourth;
 
   @override
   State<PlayerCard> createState() => _PlayerCardState();
@@ -22,6 +20,11 @@ class PlayerCard extends StatefulWidget {
 
 class _PlayerCardState extends State<PlayerCard> {
   final TextEditingController _scoreController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    _scoreController.text = widget.playerScore.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +48,7 @@ class _PlayerCardState extends State<PlayerCard> {
             title: Text(
               widget.playerName,
               style: const TextStyle(
+                overflow: TextOverflow.ellipsis,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -55,7 +59,7 @@ class _PlayerCardState extends State<PlayerCard> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    widget.fourth == true ? widget.onScoreChanged(widget.playerScore + 20) : widget.onScoreChanged(widget.playerScore + 10);
+                    widget.onScoreChanged(widget.playerScore + 10);
                   },
                   child: Container(
                     width: 50,
@@ -78,7 +82,7 @@ class _PlayerCardState extends State<PlayerCard> {
                 ),
                 const SizedBox(width: 10),
                 Container(
-                  width: 70,
+                  width: 50,
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
@@ -91,6 +95,7 @@ class _PlayerCardState extends State<PlayerCard> {
                       keyboardType: TextInputType.number,
                       onChanged: (value) {
                         widget.onScoreChanged(int.parse(value));
+
                       },
                     ),
                   ),
