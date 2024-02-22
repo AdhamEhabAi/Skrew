@@ -75,7 +75,7 @@ class _FirstRoundState extends State<FirstRound> {
                       {
                         playerScores[value] = 0;
                       });
-                      Get.to(() => SecondRound(totalResult: totalResult,),
+                      Get.offAll(() => SecondRound(totalResult: totalResult,),
                           arguments: playerScores,
                           transition: Transition.rightToLeft);
 

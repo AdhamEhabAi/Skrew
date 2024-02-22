@@ -84,7 +84,7 @@ class _SecondRoundState extends State<SecondRound> {
                       for (var value in playerScores.keys) {
                         playerScores[value] = 0;
                       }
-                      Get.to(() => ThirdRound(totalResult: totalResult,), arguments: playerScores,transition: Transition.rightToLeft);
+                      Get.offAll(() => ThirdRound(totalResult: totalResult,), arguments: playerScores,transition: Transition.rightToLeft);
 
                     },
                   ),

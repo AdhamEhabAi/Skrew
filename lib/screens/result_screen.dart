@@ -76,7 +76,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     text: 'New Game',
                     color: kSecondryColor,
                     onTap: () {
-                      Get.to(() => const ConfigPage(), arguments: playerScores,transition: Transition.zoom);
+                      Get.offAll(() => ConfigPage(oldPlayers: playerScores,),transition: Transition.zoom);
                     },
                   ),
                 ],

@@ -89,7 +89,7 @@ class _FourthRoundState extends State<FourthRound> {
                       }
                       addScoreToResult(playerScores , totalResult);
 
-                      Get.to(() => const ResultScreen(), arguments: totalResult,transition: Transition.fadeIn);
+                      Get.offAll(() => const ResultScreen(), arguments: totalResult,transition: Transition.fadeIn);
 
                     },
                   ),

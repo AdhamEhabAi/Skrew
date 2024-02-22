@@ -7,23 +7,24 @@ import 'package:screw/widgets/player_dialog.dart';
 import 'package:screw/widgets/player_widget.dart';
 
 class ConfigPage extends StatefulWidget {
-  const ConfigPage({Key? key}) : super(key: key);
+  const ConfigPage({Key? key, required this.oldPlayers}) : super(key: key);
+  final Map<String,int> oldPlayers;
 
   @override
   State<ConfigPage> createState() => _ConfigPageState();
 }
 
 class _ConfigPageState extends State<ConfigPage> {
-  Map<String,int> players = {};
-  Map<String ,int> oldPlayers = {};
+  late Map<String,int> players;
+
+  @override
+  void initState() {
+    super.initState();
+    players = Map.from(widget.oldPlayers); // Create a copy of oldPlayers
+  }
+
   @override
   Widget build(BuildContext context) {
-    oldPlayers = (ModalRoute.of(context)!.settings.arguments as Map<String,int>?) ?? {};
-    for(var key in oldPlayers.keys)
-    {
-      oldPlayers[key] = 0;
-    }
-    players.addAll(oldPlayers);
     return Scaffold(
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
@@ -43,9 +44,10 @@ class _ConfigPageState extends State<ConfigPage> {
                   const Text(
                     'Players',
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        color: Colors.white),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                      color: Colors.white,
+                    ),
                   ),
                   ListView.builder(
                     shrinkWrap: true,
@@ -95,7 +97,11 @@ class _ConfigPageState extends State<ConfigPage> {
                   players.length>=3 ? CustomButton(text: 'Let\'s Start',color: kSecondryColor,
                     onTap: ()
                     {
-                      Get.to(() => const FirstRound(), arguments: players,transition: Transition.rightToLeft);
+                      players.keys.forEach((value)
+                      {
+                        players[value] = 0;
+                      });
+                      Get.offAll(() => const FirstRound(), arguments: players,transition: Transition.rightToLeft);
                     },
                   ) : Container(),
                   const SizedBox(height: 20,),
@@ -106,7 +112,6 @@ class _ConfigPageState extends State<ConfigPage> {
                     {
                       setState(() {
                         players.clear();
-                        oldPlayers.clear();
                       });
                     },
                   ) : Container(),
@@ -122,6 +127,7 @@ class _ConfigPageState extends State<ConfigPage> {
   void _showPlayerDialog(BuildContext context) {
     showDialog(
       context: context,
+      barrierDismissible: true,
       builder: (BuildContext context) {
         return PlayerDialog(
           onPlayerAdded: (name) {

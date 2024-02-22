@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Timer(const Duration(seconds: 3), () {
-      Get.to(() => const ExplainPage(),transition: Transition.fadeIn);
+      Get.offAll(() => const ExplainPage(),transition: Transition.fadeIn);
 
     });
     super.initState();

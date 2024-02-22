@@ -77,7 +77,7 @@ class ExplainPage extends StatelessWidget {
                   width: 200,
                   onTap: ()
                   {
-                    Get.to(() => const ConfigPage(),transition: Transition.fadeIn);
+                    Get.offAll(() => const ConfigPage(oldPlayers: {},),transition: Transition.fadeIn);
 
                   },
                 ),

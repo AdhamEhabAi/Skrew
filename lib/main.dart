@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         'SplashScreen' :(context) => const SplashScreen(),
-        'ConfigPage' : (context) => const ConfigPage(),
+        'ConfigPage' : (context) => const ConfigPage(oldPlayers: {},),
         'ExplainPage' : (context) => const ExplainPage(),
         'FirstRound' : (context) => const FirstRound(),
         'SecondRound' : (context) => const SecondRound(totalResult: {},),
