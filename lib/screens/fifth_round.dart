@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screw/constants/colors.dart';
 import 'package:screw/constants/functions.dart';
-import 'package:screw/screens/fifth_round.dart';
+import 'package:screw/screens/result_screen.dart';
 import 'package:screw/widgets/custom_button.dart';
 import 'package:screw/widgets/player_card.dart';
 
-class FourthRound extends StatefulWidget {
-  final Map<String,int> totalResult;
-
-  const FourthRound({Key? key, required this.totalResult}) : super(key: key);
+class FifthRound extends StatefulWidget {
+  final Map<String, int> totalResult;
+  const FifthRound({Key? key, required this.totalResult}) : super(key: key);
 
   @override
-  State<FourthRound> createState() => _FourthRoundState();
+  State<FifthRound> createState() => _FifthRoundState();
 }
 
-class _FourthRoundState extends State<FourthRound> {
+class _FifthRoundState extends State<FifthRound> {
   Map<String, int> playerScores = {};
   late Map<String, int> totalResult;
   @override
@@ -26,10 +25,11 @@ class _FourthRoundState extends State<FourthRound> {
 
   @override
   Widget build(BuildContext context) {
-    playerScores = ModalRoute.of(context)!.settings.arguments as Map<String, int>;
+    playerScores =
+        ModalRoute.of(context)!.settings.arguments as Map<String, int>;
 
     return WillPopScope(
-      onWillPop:() => onBackButtonPressed(context),
+      onWillPop: () => onBackButtonPressed(context),
       child: Scaffold(
         body: SingleChildScrollView(
           clipBehavior: Clip.none,
@@ -52,21 +52,25 @@ class _FourthRoundState extends State<FourthRound> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          'Blind Round',
+                          'Final Doubled Round',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
                             color: Colors.white,
                           ),
                         ),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         SizedBox(
-                          width: 60,
-                          height: 60,
-                          child: Image.asset('assets/images/blind.png'),
+                          width: 40,
+                          height: 40,
+                          child: Image.asset('assets/images/finish.png'),
                         ),
                       ],
                     ),
                     ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: playerScores.length,
                       itemBuilder: (context, index) => PlayerCard(
@@ -74,20 +78,26 @@ class _FourthRoundState extends State<FourthRound> {
                         playerScore: playerScores.values.elementAt(index),
                         onScoreChanged: (int score) {
                           setState(() {
-                            playerScores[playerScores.keys.elementAt(index)] = score;
+                            playerScores[playerScores.keys.elementAt(index)] =
+                                score;
                           });
                         },
                       ),
                     ),
                     CustomButton(
-                      text: 'Final Round',
+                      text: 'Finish',
                       color: kSecondryColor,
                       onTap: () {
-                        addScoreToResult(playerScores, totalResult);
-                        for (var value in playerScores.keys) {
-                          playerScores[value] = 0;
+                        for (var key in playerScores.keys) {
+                          if (playerScores.containsKey(key)) {
+                            playerScores[key] = (playerScores[key]!) * 2;
+                          }
                         }
-                        Get.offAll(() => FifthRound(totalResult: totalResult,), arguments: playerScores,transition: Transition.rightToLeft);
+                        addScoreToResult(playerScores, totalResult);
+
+                        Get.offAll(() => const ResultScreen(),
+                            arguments: totalResult,
+                            transition: Transition.fadeIn);
                       },
                     ),
                   ],
